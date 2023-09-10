@@ -1,9 +1,13 @@
 ---
+import { Marked } from 'marked';
+import { markedHighlight } from 'marked-highlight';
+import Prism from 'prismjs'
+import loadLanguages from 'prismjs/components/';
+loadLanguages(['py', 'ts']); // TODO: get these values from a remote config
+
 import Layout from "@/layouts/Layout.astro";
 import fetchApi from "@/lib/strapi";
 import type Post from "@/interfaces/post";
-
-import { marked } from 'marked';
 
 import formatDate from "@/utils/formatDate";
 
@@ -22,6 +26,15 @@ export async function getStaticPaths() {
 type Props = Post;
 
 const post = Astro.props;
+const marked = new Marked(
+  markedHighlight({
+    langPrefix: 'language-',
+    highlight(code, lang) {
+      return Prism.highlight(code, Prism.languages[lang], lang);
+    }
+  })
+);
+const articleContent = marked.parse(post.attributes.content)
 ---
 
 <Layout title={post.attributes.title} description={post.attributes.description}>
@@ -33,6 +46,6 @@ const post = Astro.props;
       <p class="italic">{post.attributes.description}</p>
     </header>
 
-    <article set:html={marked.parse(post.attributes.content)} />
+    <article set:html={articleContent} />
   </main>
 </Layout>
