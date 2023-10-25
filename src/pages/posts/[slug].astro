@@ -6,7 +6,7 @@ import loadLanguages from 'prismjs/components/';
 loadLanguages(['py', 'ts']); // TODO: get these values from a remote config
 
 import Layout from "@/layouts/Layout.astro";
-import fetchApi from "@/lib/strapi";
+import fetchApi from "@/lib/fetch-api";
 import type Post from "@/interfaces/post";
 
 import formatDate from "@/utils/formatDate";
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 });;
 
   return posts.map((post) => ({
-    params: { slug: post.attributes.slug },
+    params: { slug: post.slug },
     props: post,
   }));
 }
@@ -34,16 +34,16 @@ const marked = new Marked(
     }
   })
 );
-const articleContent = marked.parse(post.attributes.content)
+const articleContent = marked.parse(post.content)
 ---
 
-<Layout title={post.attributes.title} description={post.attributes.description}>
+<Layout title={post.title} description={post.description}>
   <main class="post mx-auto flex w-full max-w-prose flex-col gap-4">
     <header role="presentation">
       <h1 class="text-md">
-        {post.attributes.title} - {formatDate(new Date(post.attributes.publishedAt))}
+        {post.title} - {formatDate(new Date(post.published_at))}
       </h1>
-      <p class="italic">{post.attributes.description}</p>
+      <p class="italic">{post.description}</p>
     </header>
 
     <article set:html={articleContent} />

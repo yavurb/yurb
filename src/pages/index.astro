@@ -10,7 +10,7 @@ import convertAsteriskToStrongTag from "@/utils/convertAsteriskToStrongTag";
 import presentation from "@/data/presentation";
 import projects from "@/data/projects";
 
-import fetchApi from "@/lib/strapi";
+import fetchApi from "@/lib/fetch-api";
 import type Post from "@/interfaces/post";
 
 const posts = await fetchApi<Post[]>({
@@ -70,10 +70,10 @@ const posts = await fetchApi<Post[]>({
             posts
               .map((post) => (
                 <PostCard
-                  publishedAt={new Date(post.attributes.publishedAt)}
-                  title={post.attributes.title}
-                  description={post.attributes.description}
-                  slug={post.attributes.slug}
+                  publishedAt={new Date(post?.published_at)}
+                  title={post.title}
+                  description={post.description}
+                  slug={post.slug}
                 />
               ))
         }

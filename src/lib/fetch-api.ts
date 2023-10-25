@@ -25,7 +25,7 @@ export default async function fetchApi<T>({
     endpoint = endpoint.slice(1);
   }
 
-  let url = `${import.meta.env.STRAPI_URL}/api/${endpoint}`;
+  let url = `${import.meta.env.BACKEND_URL}/${endpoint}`;
 
   if (query) {
     url += `?${qs.stringify(query)}`;
