@@ -8,13 +8,25 @@ import Link from "@/components/shared/Link.astro";
 import convertAsteriskToStrongTag from "@/utils/convertAsteriskToStrongTag";
 
 import presentation from "@/data/presentation";
-import projects from "@/data/projects";
 
 import fetchApi from "@/lib/fetch-api";
 import type Post from "@/interfaces/post";
+import type Projects from "@/interfaces/projects";
 
 const posts = await fetchApi<Post[]>({
   endpoint: 'posts',
+  wrappedByKey: 'data',
+  query: {
+    sort: ['publishedAt:desc'],
+    pagination: {
+      page: 1,
+      pageSize: 2
+    }
+  }
+});
+
+const projects = await fetchApi<Projects[]>({
+  endpoint: 'projects',
   wrappedByKey: 'data',
   query: {
     sort: ['publishedAt:desc'],
