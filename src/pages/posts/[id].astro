@@ -1,5 +1,4 @@
 ---
-export const prerender = true
 import { Marked } from 'marked';
 import { markedHighlight } from 'marked-highlight';
 import Prism from 'prismjs'
@@ -12,21 +11,11 @@ import type Post from "@/interfaces/post";
 
 import formatDate from "@/utils/formatDate";
 
-export async function getStaticPaths() {
-  const posts = await fetchApi<Post[]>({
-    endpoint: 'posts',
-    wrappedByKey: 'data',
+const { id } = Astro.params;
+const post: Post = await fetchApi<Post>({
+    endpoint: `posts/${id}`,
   });
 
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: post,
-  }));
-}
-
-type Props = Post;
-
-const post = Astro.props;
 const marked = new Marked(
   markedHighlight({
     langPrefix: 'language-',
