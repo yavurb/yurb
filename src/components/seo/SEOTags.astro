@@ -6,16 +6,16 @@ type Props = HeadTags;
 
 const { title, description, noindex, og } = Astro.props;
 
-const DEFAULT_TITLE_PAGE = "Astro - Portfolio template";
+const DEFAULT_TITLE_PAGE = "Yurb - Portfolio";
 const DEFAULT_DESCRIPTION_PAGE =
-  "A minimal portfolio template built with Astro and Tailwindcss.";
+  "A backend-oriented blog and portfolio build by yurb";
 const DEFAULT_URL_SITE = import.meta.env.SITE;
 
 const openGraph = {
   title: title || og?.title || DEFAULT_TITLE_PAGE,
   type: og?.type || "website",
-  image: og?.image || "/opengraph-image.jpg",
-  alt: og?.alt || "astro portfolio template image",
+  image: og?.image || "https://og.tailgraph.com/og?fontFamily=Source%2BSans%2BPro&title=Yurb&titleTailwind=font-bold%20text-6xl%20text-white&text=Backend-oriented%20blog%20and%20portfolio&textTailwind=text-2xl%20mt-4%20text-white&logoTailwind=h-8&bgUrl=https%3A%2F%2Fcdn.yurb.dev%2F132-2db02cc1-477e-43de-820a-3a292346c9e4.jpg&bgTailwind=bg-white%20bg-center%20bg-cover&footer=yurb.dev&footerTailwind=bg-transparent%20text-blueGray-200&containerTailwind=bg-transparent&t=1698291241646&refresh=1",
+  alt: og?.alt || "yurb's portfolio image",
   url: DEFAULT_URL_SITE,
   description: og?.description || DEFAULT_DESCRIPTION_PAGE,
 };
@@ -38,11 +38,12 @@ const openGraph = {
       },
     }}
     twitter={{
-      creator: "@itsstormzz_",
+      creator: "@yurb_",
     }}
     extend={{
       link: [
-        { rel: "icon", href: "/favicon.svg" },
+        { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+        { rel: "icon", href: "/favicon.png", type: "image/png" },
         { rel: "sitemap", href: "/sitemap-index.xml" },
       ],
       meta: [
@@ -55,7 +56,7 @@ const openGraph = {
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: openGraph.title },
         { name: "twitter:description", content: openGraph.description },
-        { name: "twitter:site", content: "@itsstormzz_" },
+        { name: "twitter:site", content: "@yurb_" },
       ],
     }}
   />
