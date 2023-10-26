@@ -14,9 +14,9 @@ type Presentation = {
 const presentation: Presentation = {
   mail: "yavurb@gmail.com",
   title: "Hi, I’m Roy 🐙",
-  // profile: "/profile.webp",
+  profile: "https://cdn.yurb.dev/profile-84fda3c8-74db-474b-a493-19167c908f39.webp",
   description:
-    "I'm a backend developer",
+    "I'm a backend developer who is passionate about building software. I'm also delving into technical writing, and thus, I use this website as my own personal blog to share my learnings and the things I know. In fact, this website is my sandbox, so expect to see a lot of bugs and experimental features. Not because I have nowhere to put them (I don't), but because I truly believe that experimenting and messing things around is the best way for me to become a great SWE. I mean, that is what software is all about, right?",
   socials: [
     {
       label: "Bento",
