@@ -28,6 +28,7 @@
 
 .post pre {
   @apply p-4;
+  @apply overflow-x-auto
 }
 
 .post pre > code {
