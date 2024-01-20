@@ -3,15 +3,15 @@ import type Project from "@/interfaces/projects";
 
 type Props = Project;
 
-const { name, tags, url } = Astro.props;
+const { name, tags, url, coming_soon } = Astro.props;
 
 const formatTags = (values: string[]) =>
   values.toString().replaceAll(",", " • ");
 ---
 
 <>
-  <!-- {
-    isComingSoon && (
+  {
+    coming_soon && (
       <div class="t group flex w-full flex-col justify-between gap-2 rounded-md border border-neutral-700 p-4 md:flex-row md:items-center">
         <div class="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
           <p class="text-neutral-100">{name}</p>
@@ -21,10 +21,10 @@ const formatTags = (values: string[]) =>
         <p class="w-fit rounded-md bg-neutral-900 px-4 py-1">Soon</p>
       </div>
     )
-  } -->
+  }
 
-  <!-- {
-    !isComingSoon && ( -->
+  {
+    !coming_soon && (
       <a
         class="group flex w-full cursor-pointer flex-col justify-between gap-2 rounded-md border border-neutral-700 p-4 transition-all duration-300 hover:-translate-y-2 hover:border-neutral-400 md:flex-row md:items-center"
         href={url}
@@ -57,6 +57,6 @@ const formatTags = (values: string[]) =>
           />
         </svg>
       </a>
-    <!-- )
-  } -->
+    )
+  }
 </>

@@ -7,6 +7,7 @@ export default interface Project {
   url: string
   description: string
   tags: string[]
+  coming_soon: boolean
   created_at: string
   updated_at: string
 }
