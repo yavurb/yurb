@@ -6,6 +6,7 @@ import PostCard from "@/components/PostCard.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import Link from "@/components/shared/Link.astro";
 import convertAsteriskToStrongTag from "@/utils/convertAsteriskToStrongTag";
+import profilePicture from "@/assets/profile.png";
 
 import presentation from "@/data/presentation";
 
@@ -43,17 +44,13 @@ const projects = await fetchApi<Projects[]>({
     <article
       class="flex flex-col gap-8 md:flex-row-reverse md:justify-end md:gap-12"
     >
-      {
-        presentation.profile && (
-          <Image
-            src={presentation.profile}
-            class="w-1/4 self-center rounded-full"
-            alt="Yurb's profile image",
-            width="200",
-            height="200"
-          />
-        )
-      }
+      <Image
+        src={profilePicture}
+        class="w-1/4 self-center rounded-full"
+        alt="Yurb's profile image",
+        width="200",
+        height="200"
+      />
 
       <div class="flex flex-col gap-8">
         <h1 class="text-3xl text-neutral-100">
