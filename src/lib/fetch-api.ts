@@ -1,10 +1,13 @@
-import * as qs from 'qs';
+import qs from 'qs';
 
 interface Props {
   endpoint: string;
   query?: Record<string, any>;
   wrappedByKey?: string;
   wrappedByList?: boolean;
+  method?: "GET" | "POST" | "PUT" | "DELETE";
+  body?: Record<string, any>;
+  defaultReturn?: any;
 }
 
 /**
@@ -20,7 +23,10 @@ export default async function fetchApi<T>({
   query = {},
   wrappedByKey,
   wrappedByList,
-}: Props): Promise<T> {
+  method = "GET",
+  body = {},
+  defaultReturn,
+}: Props): Promise<T | any> {
   if (endpoint.startsWith('/')) {
     endpoint = endpoint.slice(1);
   }
@@ -31,16 +37,46 @@ export default async function fetchApi<T>({
     url += `?${qs.stringify(query)}`;
   }
 
-  const res = await fetch(url);
-  let data = await res.json();
+  const headers = new Headers();
+  headers.set("x-api-key", import.meta.env.BACKEND_APIKEY)
 
-  if (wrappedByKey) {
-    data = data[wrappedByKey];
+  const options: RequestInit = {
+    method,
+    headers: headers,
   }
 
-  if (wrappedByList) {
-    data = data[0];
+  if (method === "POST" || method === "PUT") {
+    headers.set('Content-Type', 'application/json');
+    options.body = JSON.stringify(body);
   }
 
-  return data as T;
+
+  try {
+    const res = await fetch(url, options);
+    if (!res.ok) {
+      console.error(`Error fetching ${url}. Status: ${res.status}`);
+
+      if (res.status === 404) {
+        return defaultReturn;
+      }
+
+      // TODO: Handle error
+      return defaultReturn;
+    }
+
+    let data = await res.json();
+
+    if (wrappedByKey) {
+      data = data[wrappedByKey];
+    }
+    if (wrappedByList) {
+      data = data[0];
+    }
+
+    return data as T;
+  } catch (error) {
+    console.error(`Error fetching ${url}. ${error}`);
+
+    return defaultReturn;
+  }
 }
